@@ -1,21 +1,24 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "tauri": "tauri"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^1.2.3",
-    "autoprefixer": "^10.4.13",
-    "nuxt": "^3.1.2",
-    "postcss": "^8.4.21"
-  },
-  "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.3.1",
-    "@tauri-apps/api": "^1.2.0"
-  }
+	"private": true,
+	"version": "1.0.0",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"tauri:dev": "tauri dev",
+		"tauri:build": "tauri build"
+	},
+	"devDependencies": {
+		"@nuxt/devtools": "^2.0.0",
+		"@tauri-apps/cli": "^1.2.3",
+		"autoprefixer": "^10.4.13",
+		"nuxt": "^3.1.2",
+		"postcss": "^8.4.21"
+	},
+	"dependencies": {
+		"@nuxtjs/tailwindcss": "^6.3.1",
+		"@tauri-apps/api": "^1.2.0"
+	}
 }
