@@ -1,9 +1,11 @@
 <template>
-	<div class="p-4 flex justify-center items-center">
+	<UContainer>
+		<NewSecret />
 		<SecretTable />
-	</div>
+	</UContainer>
 </template>
 
 <script setup lang="ts">
 import SecretTable from "~/components/secret-table.vue";
+import NewSecret from "~/components/new-secret.vue";
 </script>

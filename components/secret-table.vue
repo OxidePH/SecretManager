@@ -1,181 +1,65 @@
 <template>
-	<div>
-		<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-			<table
-				class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-			>
-				<thead
-					class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-				>
-					<tr>
-						<th scope="col" class="px-6 py-3">Product name</th>
-						<th scope="col" class="px-6 py-3">Color</th>
-						<th scope="col" class="px-6 py-3">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr
-						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<th
-							scope="row"
-							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>
-							AirTag
-						</th>
-						<td class="px-6 py-4">Silver</td>
-						<td class="px-6 py-4">
-							<a
-								href="#"
-								class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>Edit</a
-							>
-						</td>
-					</tr>
-					<tr
-						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<th
-							scope="row"
-							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>
-							AirTag
-						</th>
-						<td class="px-6 py-4">Silver</td>
-						<td class="px-6 py-4">
-							<a
-								href="#"
-								class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>Edit</a
-							>
-						</td>
-					</tr>
-					<tr
-						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<th
-							scope="row"
-							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>
-							AirTag
-						</th>
-						<td class="px-6 py-4">Silver</td>
-						<td class="px-6 py-4">
-							<a
-								href="#"
-								class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>Edit</a
-							>
-						</td>
-					</tr>
-					<tr
-						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<th
-							scope="row"
-							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>
-							AirTag
-						</th>
-						<td class="px-6 py-4">Silver</td>
-						<td class="px-6 py-4">
-							<a
-								href="#"
-								class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>Edit</a
-							>
-						</td>
-					</tr>
-					<tr
-						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<th
-							scope="row"
-							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>
-							AirTag
-						</th>
-						<td class="px-6 py-4">Silver</td>
-						<td class="px-6 py-4">
-							<a
-								href="#"
-								class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>Edit</a
-							>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<nav
-				class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-				aria-label="Table navigation"
-			>
-				<span
-					class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto"
-					>Showing
-					<span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-					of
-					<span class="font-semibold text-gray-900 dark:text-white"
-						>1000</span
-					></span
-				>
-				<ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>Previous</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>1</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>2</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							aria-current="page"
-							class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-							>3</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>4</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>5</a
-						>
-					</li>
-					<li>
-						<a
-							href="#"
-							class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-							>Next</a
-						>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+	<UTable
+		sort-asc-icon="i-heroicons-arrow-up-20-solid"
+		sort-desc-icon="i-heroicons-arrow-down-20-solid"
+		:sort-button="{
+			icon: 'i-heroicons-sparkles-20-solid',
+			color: 'primary',
+			variant: 'outline',
+			size: '2xs',
+			square: false,
+		}"
+		class="w-full"
+		:columns="[
+			{ key: 'id', label: 'ID' },
+			{ key: 'name', label: 'Name', sortable: true },
+			{ key: 'title', label: 'Title', sortable: true },
+			{ key: 'email', label: 'Email', sortable: true },
+			{ key: 'role', label: 'Role' },
+		]"
+		:rows="[
+			{
+				id: 1,
+				name: 'Lindsay Walton',
+				title: 'Front-end Developer',
+				email: 'lindsay.walton@example.com',
+				role: 'Member',
+			},
+			{
+				id: 2,
+				name: 'Courtney Henry',
+				title: 'Designer',
+				email: 'courtney.henry@example.com',
+				role: 'Admin',
+			},
+			{
+				id: 3,
+				name: 'Tom Cook',
+				title: 'Director of Product',
+				email: 'tom.cook@example.com',
+				role: 'Member',
+			},
+			{
+				id: 4,
+				name: 'Whitney Francis',
+				title: 'Copywriter',
+				email: 'whitney.francis@example.com',
+				role: 'Admin',
+			},
+			{
+				id: 5,
+				name: 'Leonard Krasner',
+				title: 'Senior Designer',
+				email: 'leonard.krasner@example.com',
+				role: 'Owner',
+			},
+			{
+				id: 6,
+				name: 'Floyd Miles',
+				title: 'Principal Designer',
+				email: 'floyd.miles@example.com',
+				role: 'Member',
+			},
+		]"
+	/>
 </template>
-
-<script lang="ts" setup></script>
-
-<style></style>
