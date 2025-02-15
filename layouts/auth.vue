@@ -1,27 +1,49 @@
 <template>
-	<div>
+	<UContainer class="flex items-center justify-center min-h-screen bg-animated">
 		<slot />
-	</div>
+	</UContainer>
 </template>
 
 <script setup lang="ts">
-import { WebviewWindow } from "@tauri-apps/api/window";
-import bottomNavVue from "~/components/bottom-nav.vue";
-
-let newWindow = () => {
-	const webview = new WebviewWindow("About-tauri-project", {
-		url: "/project/about",
-		width: 300,
-		height: 300,
-		resizable: false,
-		title: "About tauri project",
-	});
-	webview.once("tauri://created", function () {
-		// webview window successfully created
-	});
-	webview.once("tauri://error", function (e: any) {
-		// an error happened creating the webview window
-		console.error(e);
-	});
-};
 </script>
+
+<style scoped>
+@keyframes moveBackground {
+	from {
+		background-position: 0 0;
+	}
+
+	to {
+		background-position: 100% -100%;
+	}
+}
+
+/* Background Animation */
+.bg-animated::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url('/assets/image/logo.png') repeat;
+	background-size: 150px 150px;
+	animation: moveBackground 10s linear infinite;
+	z-index: -2;
+}
+
+/* Blur Effect */
+.bg-animated::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(5px);
+	/* Adjust blur intensity */
+	-webkit-backdrop-filter: blur(5px);
+	/* For Safari */
+	z-index: -1;
+}
+</style>
