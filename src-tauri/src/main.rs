@@ -42,6 +42,7 @@ fn main() {
 
             Ok(())
         })
+        .plugin(tauri_plugin_system_info::init())
         .plugin(
             tauri_plugin_stronghold::Builder::new(|password| {
                 use argon2::{hash_raw, Config, Variant, Version};

@@ -3,7 +3,7 @@
 <h2>OXIDE SECRET MANAGER</h2>
 
 <a href="https://github.com/OxidePH/SecretManager/actions/workflows/windows-build.yml">
-  <img src="https://github.com/surelle-ha/OxidePH/actions/workflows/windows-build.yml/badge.svg" alt="⚡ Github Registry">
+  <img src="https://github.com/OxidePH/SecretManager/actions/workflows/windows-build.yml/badge.svg" alt="⚡ Binary Build">
 </a>
 
 <img align="right" width=200px alt="Unicorn" src="https://avatars.githubusercontent.com/u/186928542"/>

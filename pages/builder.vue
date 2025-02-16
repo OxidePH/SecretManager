@@ -1,5 +1,7 @@
 <template>
-	<div>Settings</div>
+	<div>
+		Builder
+	</div>
 </template>
 
 <script lang="ts" setup>
@@ -7,5 +9,3 @@ definePageMeta({
 	middleware: "setup-middleware",
 });
 </script>
-
-<style></style>

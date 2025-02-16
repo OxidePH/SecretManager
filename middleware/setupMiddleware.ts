@@ -1,54 +1,36 @@
 import { defineNuxtRouteMiddleware, navigateTo } from "#app";
-import { BaseDirectory, readDir, readTextFile } from "@tauri-apps/api/fs";
+import { readDir } from "@tauri-apps/api/fs";
+import { appDataDir } from "@tauri-apps/api/path";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const toast = useToast();
 	try {
-		const data = await readTextFile("oxidesm.json", {
-			directory: BaseDirectory.AppData,
-		});
+		const appDir = await appDataDir();
 
-		const parsed = JSON.parse(data);
-		console.log(parsed);
+		// Read all files in the app data directory
+		const files = await readDir(appDir);
 
-		if (!parsed.directory || typeof parsed.directory !== "string") {
-			throw new Error("Invalid directory path in oxidesm.json");
+		// Check if any .hold files exist
+		const vaultExists = files.some((file) => file.name?.endsWith(".hold"));
+
+		if (!vaultExists) {
+			throw new Error("No vault files found");
 		}
 
-		const workspacePath = `${parsed.directory}/OxideSM/workspace`;
-
-		const files = await readDir(workspacePath);
-
-		console.log(files.length);
-
-		// Redirect to setup if workspace is empty and NOT already there
-		if (!files.length && to.path !== "/setup/welcome") {
-			toast.add({
-				id: "workspace_error",
-				title: "Workspace not found",
-				description: "Please setup your workspace first.",
-				icon: "i-heroicons-exclamation-circle",
-				timeout: 5000,
-			});
-			return navigateTo("/setup/welcome");
-		}
-
-		// If workspace exists, ALLOW navigation (do nothing)
+		// Allow navigation if at least one .hold file exists
 		return;
 	} catch (error) {
-		console.error("Error reading workspace:", error);
-		// Redirect only if not already on setup page
+		console.error("Error checking vault files:", error);
+
 		if (to.path !== "/setup/welcome") {
 			toast.add({
 				id: "workspace_error",
-				title: "Workspace not found",
-				description: "Please setup your workspace first.",
+				title: "Vaults Not Found",
+				description: "Please set up at least one vault first.",
 				icon: "i-heroicons-exclamation-circle",
 				timeout: 5000,
 			});
 			return navigateTo("/setup/welcome");
 		}
 	}
-
-	// If everything is fine, do nothing and allow the user to navigate freely.
 });

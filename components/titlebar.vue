@@ -60,14 +60,39 @@
 </template>
 
 <script lang="ts" setup>
+import { appDataDir } from "@tauri-apps/api/path";
+import { removeFile, readDir } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+const toast = useToast();
 const router = useRouter();
 const isOnExit = ref(false);
 const isDeveloperOpen = ref(false);
 const commandPaletteRef = ref();
+
+const clearWorkspaces = async () => {
+	try {
+		const dir = await appDataDir();
+		const files = await readDir(dir, { recursive: true });
+
+		for (const file of files) {
+			if (file.name?.endsWith(".hold")) {
+				await removeFile(file.path);
+			}
+		}
+		toast.add({
+			id: 'developer_clearworkspace',
+			title: 'Workspaces Cleared',
+			description: 'All workspaces have been cleared successfully.',
+			icon: 'i-heroicons-exclamation-circle',
+			timeout: 5000,
+		});
+	} catch (error) {
+		console.error("Failed to clear workspaces:", error);
+	}
+};
 
 const handleMinimize = () => {
 	appWindow.minimize();
@@ -124,7 +149,7 @@ const actions = [
 		id: "clear-workspaces",
 		label: "Clear Workspaces",
 		icon: "i-heroicons-server-stack",
-		click: async () => await appWindow.hide(),
+		click: async () => await clearWorkspaces(),
 		shortcuts: ["⌘", "C"],
 	},
 	{

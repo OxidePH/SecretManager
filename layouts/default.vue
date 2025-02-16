@@ -1,28 +1,21 @@
 <template>
-	<div>
-		<slot />
+	<div class="mt-7">
+		<UContainer class="p-4 h-screen">
+			<slot />
+		</UContainer>
 	</div>
-	<bottomNavVue />
+	<Navbar />
 </template>
 
 <script setup lang="ts">
-import { WebviewWindow } from "@tauri-apps/api/window";
-import bottomNavVue from "~/components/bottom-nav.vue";
-
-let newWindow = () => {
-	const webview = new WebviewWindow("About-tauri-project", {
-		url: "/project/about",
-		width: 300,
-		height: 300,
-		resizable: false,
-		title: "About tauri project",
-	});
-	webview.once("tauri://created", function () {
-		// webview window successfully created
-	});
-	webview.once("tauri://error", function (e: any) {
-		// an error happened creating the webview window
-		console.error(e);
-	});
-};
+import Navbar from "~/components/navbar.vue";
 </script>
+
+<style scoped>
+div {
+	background: #2c2d44;
+	background-image: -moz-linear-gradient(45deg, #4b5132 2%, #002025 100%);
+	background-image: -webkit-linear-gradient(45deg, #3f3251 2%, #002025 100%);
+	background-image: linear-gradient(45deg, #3f3251 2%, #002025 100%);
+}
+</style>

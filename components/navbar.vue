@@ -5,18 +5,18 @@
 				<div class="bg-standard px-7 shadow-lg rounded-t-2xl">
 					<div class="flex">
 						<div class="flex-1 group">
-							<NuxtLink href="/news"
+							<NuxtLink href="/connect" :class="{ 'text-green-500': route.path === '/connect' }"
 								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
-									<i class="far fa-newspaper text-2xl pt-1 mb-1 block"></i>
-									<span class="block text-xs pb-2">News</span>
+									<i class="far fa-globe text-2xl pt-1 mb-1 block"></i>
+									<span class="block text-xs pb-2">Connect</span>
 									<span class="block w-5 mx-auto h-1 group-hover:bg-green-500 rounded-full"></span>
 								</span>
 							</NuxtLink>
 						</div>
 						<div class="flex-1 group">
-							<NuxtLink href="/vaults"
-								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
+							<NuxtLink href="/vaults" :class="{ 'text-green-500': route.path === '/vaults' }" class=" flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400
+								group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
 									<i class="far fa-lock text-2xl pt-1 mb-1 block"></i>
 									<span class="block text-xs pb-2">Vaults</span>
@@ -25,7 +25,7 @@
 							</NuxtLink>
 						</div>
 						<div class="flex-1 group">
-							<NuxtLink href="/"
+							<NuxtLink href="/" :class="{ 'text-green-500': route.path === '/' }"
 								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
 									<i class="far fa-home text-2xl pt-1 mb-1 block"></i>
@@ -35,21 +35,21 @@
 							</NuxtLink>
 						</div>
 						<div class="flex-1 group">
-							<NuxtLink href="/settings"
+							<NuxtLink href="/builder" :class="{ 'text-green-500': route.path === '/builder' }"
 								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
-									<i class="far fa-cog text-2xl pt-1 mb-1 block"></i>
-									<span class="block text-xs pb-2">Settings</span>
+									<i class="far fa-hammer text-2xl pt-1 mb-1 block"></i>
+									<span class="block text-xs pb-2">Builder</span>
 									<span class="block w-5 mx-auto h-1 group-hover:bg-green-500 rounded-full"></span>
 								</span>
 							</NuxtLink>
 						</div>
 						<div class="flex-1 group">
-							<NuxtLink href="/profile"
+							<NuxtLink href="/settings" :class="{ 'text-green-500': route.path === '/settings' }"
 								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
-									<i class="far fa-user-circle text-2xl pt-1 mb-1 block"></i>
-									<span class="block text-xs pb-2">Profile</span>
+									<i class="far fa-cog text-2xl pt-1 mb-1 block"></i>
+									<span class="block text-xs pb-2">Settings</span>
 									<span class="block w-5 mx-auto h-1 group-hover:bg-green-500 rounded-full"></span>
 								</span>
 							</NuxtLink>
@@ -63,6 +63,7 @@
 
 <script lang="ts" setup>
 import { NuxtLink } from "#components";
+const route = useRoute();
 </script>
 
 <style scoped>

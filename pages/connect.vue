@@ -1,5 +1,6 @@
 <template>
-	<div></div>
+	<div>
+	</div>
 </template>
 
 <script lang="ts" setup>
@@ -8,4 +9,4 @@ definePageMeta({
 });
 </script>
 
-<style></style>
+<style scoped></style>

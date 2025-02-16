@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { usePin } from "@/composables/usePin";
 definePageMeta({
-	layout: "auth",
+	layout: "setup",
 });
 
 const inputs = ref<(HTMLInputElement | null)[]>([]);

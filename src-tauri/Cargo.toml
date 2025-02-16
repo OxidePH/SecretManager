@@ -17,11 +17,12 @@ tauri-build = { version = "1.2.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.4", features = [ "fs-all", "dialog-all", "system-tray", "notification-all", "shell-all", "window-all"] }
+tauri = { version = "1.2.4", features = [ "path-all", "fs-all", "dialog-all", "system-tray", "notification-all", "shell-all", "window-all"] }
 window-vibrancy = "0.5.3"
 window-shadows = "0.2.2"
 tauri-plugin-devtools = "0.1.0"
 tauri-plugin-stronghold = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+tauri-plugin-system-info = { git = "https://github.com/HuakunShen/tauri-plugin-system-info", branch = "v1" }
 rust-argon2 = "2.1.0"
 
 [features]

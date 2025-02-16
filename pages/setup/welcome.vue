@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 definePageMeta({
-    layout: "auth",
+    layout: "setup",
 });
 const router = useRouter();
 

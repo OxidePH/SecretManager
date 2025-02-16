@@ -34,10 +34,14 @@
 			"fs": {
 				"all": true,
 				"scope": ["**"]
+			},
+			"path": {
+				"all": true
 			}
 		},
 		"bundle": {
 			"active": true,
+			"publisher": "Oxide Open Source",
 			"category": "DeveloperTool",
 			"copyright": "",
 			"deb": {
@@ -51,7 +55,7 @@
 				"icons/icon.icns",
 				"icons/icon.ico"
 			],
-			"identifier": "com.taui.dev",
+			"identifier": "com.oxide.dev",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
