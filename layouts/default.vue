@@ -1,9 +1,10 @@
 <template>
 	<div class="mt-7">
-		<UContainer class="p-4 h-screen">
+		<UContainer class="p-6 h-screen">
 			<slot />
 		</UContainer>
 	</div>
+	<Dial />
 	<Navbar />
 </template>
 

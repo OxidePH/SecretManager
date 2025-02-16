@@ -5,10 +5,20 @@
 				class="mb-4 border-2 border-transparent hover:border-green-500 transition-all duration-300 ease-in-out cursor-pointer shadow-md hover:shadow-lg"
 				@click="handleClick(file)">
 				<template #header>
-					<h3 class="text-lg font-semibold">{{ file.name }}</h3>
+					<div class="flex items-center space-x-2">
+						<UIcon name="i-heroicons-shield-exclamation" class="w-5 h-5" />
+						<h3 class="text-lg font-semibold">
+							{{ file.name }}
+						</h3>
+					</div>
 				</template>
-				<p><strong>Size:</strong> {{ file.size }} KB</p>
-				<p><strong>Created:</strong> {{ file.created }}</p>
+				<template #footer>
+					<div class="footer-container">
+						<UButton size="2xs" variant="link" label="Use" icon="i-heroicons-wrench" />
+						<UButton size="2xs" variant="link" label="Security Check" icon="i-heroicons-shield-check" />
+						<UButton size="2xs" variant="link" label="Link Project" icon="i-heroicons-link" />
+					</div>
+				</template>
 			</UCard>
 		</div>
 	</UContainer>
