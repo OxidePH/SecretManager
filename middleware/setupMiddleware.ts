@@ -2,6 +2,7 @@ import { defineNuxtRouteMiddleware, navigateTo } from "#app";
 import { BaseDirectory, readDir, readTextFile } from "@tauri-apps/api/fs";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+	const toast = useToast();
 	try {
 		const data = await readTextFile("oxidesm.json", {
 			directory: BaseDirectory.AppData,
@@ -22,6 +23,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
 		// Redirect to setup if workspace is empty and NOT already there
 		if (!files.length && to.path !== "/setup/welcome") {
+			toast.add({
+				id: "workspace_error",
+				title: "Workspace not found",
+				description: "Please setup your workspace first.",
+				icon: "i-heroicons-exclamation-circle",
+				timeout: 5000,
+			});
 			return navigateTo("/setup/welcome");
 		}
 
@@ -31,6 +39,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 		console.error("Error reading workspace:", error);
 		// Redirect only if not already on setup page
 		if (to.path !== "/setup/welcome") {
+			toast.add({
+				id: "workspace_error",
+				title: "Workspace not found",
+				description: "Please setup your workspace first.",
+				icon: "i-heroicons-exclamation-circle",
+				timeout: 5000,
+			});
 			return navigateTo("/setup/welcome");
 		}
 	}
