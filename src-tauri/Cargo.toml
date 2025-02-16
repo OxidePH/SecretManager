@@ -7,7 +7,7 @@ license = ""
 repository = ""
 default-run = "app"
 edition = "2021"
-rust-version = "1.59"
+rust-version = "1.84.1"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -21,6 +21,8 @@ tauri = { version = "1.2.4", features = [ "fs-all", "dialog-all", "system-tray",
 window-vibrancy = "0.5.3"
 window-shadows = "0.2.2"
 tauri-plugin-devtools = "0.1.0"
+tauri-plugin-stronghold = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+rust-argon2 = "2.1.0"
 
 [features]
 # by default Tauri runs in production mode

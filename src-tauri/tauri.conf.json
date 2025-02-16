@@ -8,7 +8,7 @@
 		"withGlobalTauri": true
 	},
 	"package": {
-		"productName": "secretmanager-desktop",
+		"productName": "OxideVault",
 		"version": "1.0.0"
 	},
 	"plugins": {

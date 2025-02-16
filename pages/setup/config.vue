@@ -4,11 +4,11 @@
             Oxide Secret Manager Setup
         </template>
 
-        <UFormGroup label="Vault Name" class="mb-2">
+        <UFormGroup label="Vault Name" class="mb-2" :error="vaultError">
             <UInput placeholder="OxideVault" icon="i-heroicons-pencil" v-model="vault" />
         </UFormGroup>
 
-        <UFormGroup label="Directory" class="mb-2"
+        <UFormGroup label="Directory" class="mb-2" :error="directoryError"
             help="OxideSM operates independently of any server and stores data directly on your device.">
             <div class="input-with-button">
                 <UInput placeholder="C:\Users\JohnDoe\Documents" icon="i-heroicons-folder" v-model="directory"
@@ -17,7 +17,7 @@
             </div>
         </UFormGroup>
 
-        <UFormGroup label="Secret Key" class="mb-2">
+        <UFormGroup label="Secret Key" class="mb-2" :error="secretKeyError">
             <UInput icon="i-heroicons-key" v-model="secretKey" />
         </UFormGroup>
 
@@ -37,23 +37,27 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+    layout: "auth",
+});
 import { getName, getVersion } from '@tauri-apps/api/app';
-import { createDir, writeTextFile, readTextFile, BaseDirectory } from '@tauri-apps/api/fs';
+import { createDir, writeTextFile, readTextFile, BaseDirectory, exists } from '@tauri-apps/api/fs';
 import { open } from '@tauri-apps/api/dialog';
 import { v4 as uuidv4 } from 'uuid';
 import sign from 'jwt-encode';
 
-definePageMeta({
-    layout: "auth",
-});
-
 const toast = useToast();
 const router = useRouter();
 
-const vault = ref('');
-const directory = ref('');
+const vault = ref('OxideVault');
+const directory = ref(BaseDirectory.Document);
 const secretKey = ref('');
 const dataKey = ref('');
+
+const vaultExists = ref(false);
+const vaultError = ref('');
+const directoryError = ref('');
+const secretKeyError = ref('');
 
 const button = ref({
     label: 'Complete Setup',
@@ -65,9 +69,18 @@ const button = ref({
 onMounted(async () => {
     await generateDataKey(secretKey.value);
     await loadDirectoryPath();
+    await validateVault(vault.value);
 });
 
-const generateDataKey = async (secretKey) => {
+watch(secretKey, async (newVal) => {
+    await generateDataKey(newVal);
+});
+
+watch(vault, async (newVal) => {
+    await validateVault(newVal);
+});
+
+const generateDataKey = async (secretKey: string) => {
     const data = {
         platform: await getName(),
         version: await getVersion(),
@@ -75,11 +88,14 @@ const generateDataKey = async (secretKey) => {
         generatedAt: new Date().toISOString()
     };
     dataKey.value = sign(data, secretKey);
-}
+};
 
-watch(secretKey, async (newVal) => {
-    await generateDataKey(newVal);
-});
+const validateVault = async (name: string) => {
+    if (!directory.value) return;
+    const vaultPath = `${directory.value}/OxideSM/workspace/${name}`;
+    vaultExists.value = await exists(vaultPath);
+    vaultError.value = vaultExists.value ? 'Vault name already exists. Choose a different name.' : '';
+}
 
 const saveDirectoryPath = async (path: string) => {
     try {
@@ -114,11 +130,15 @@ const selectDirectory = async () => {
 };
 
 const handleSubmit = async () => {
-    if (!vault.value || !directory.value) {
+    vaultError.value = !vault.value ? 'Vault name is required.' : '';
+    directoryError.value = !directory.value ? 'Directory is required.' : '';
+    secretKeyError.value = !secretKey.value ? 'Secret key is required.' : '';
+
+    if (!vault.value || !directory.value || !secretKey.value || vaultExists.value) {
         toast.add({
             id: 'setup_error',
             title: 'Setup Failed',
-            description: 'Vault name and directory are required.',
+            description: 'Please fill in all required fields and ensure the vault name is unique.',
             icon: 'i-heroicons-exclamation-circle',
             timeout: 5000,
         });
@@ -163,7 +183,6 @@ const handleSubmit = async () => {
     }
 };
 </script>
-
 
 <style scoped>
 .footer-container {
