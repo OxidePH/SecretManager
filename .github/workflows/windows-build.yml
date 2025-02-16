@@ -1,0 +1,51 @@
+name: Build and Release Tauri App
+
+on:
+  push:
+    branches:
+      - main
+      - init/*
+      - feature/*
+      - chore/*
+      - fix/*
+      - documentation/*
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Tauri Dependencies
+        run: npm install
+
+      - name: Build Tauri App
+        run: npm run tauri:build
+
+      - name: Extract Version from tauri.conf.json
+        id: get_version
+        shell: pwsh
+        run: |
+          $config = Get-Content src-tauri/tauri.conf.json | ConvertFrom-Json
+          echo "VERSION=$($config.package.version)" >> $env:GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          name: "Release v${{ env.VERSION }}"
+          draft: false
+          prerelease: false
+          files: src-tauri/target/release/secretmanager-desktop.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

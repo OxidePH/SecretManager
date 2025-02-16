@@ -28,7 +28,7 @@
 	height: 100%;
 	background: url('/assets/image/logo.png') repeat;
 	background-size: 150px 150px;
-	animation: moveBackground 10s linear infinite;
+	animation: moveBackground 50s linear infinite;
 	z-index: -2;
 }
 

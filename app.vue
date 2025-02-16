@@ -5,12 +5,10 @@
 	</NuxtLayout>
 
 	<UNotifications />
-	<DeveloperSettings />
 </template>
 
 <script setup>
 import Titlebar from '~/components/titlebar.vue'
-import DeveloperSettings from '~/components/dev-settings.vue'
 </script>
 
 <style>
