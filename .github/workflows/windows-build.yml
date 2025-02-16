@@ -47,6 +47,6 @@ jobs:
           name: "Release v${{ env.VERSION }}"
           draft: false
           prerelease: false
-          files: src-tauri/target/release/secretmanager-desktop.exe
+          files: src-tauri/target/release/OxideVault.exe
         env:
           OXIDE_SECRET: ${{ secrets.OXIDE_SECRET }}
