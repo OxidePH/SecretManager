@@ -1,4 +1,4 @@
-name: Build and Release Tauri App
+name: "Build Windows 🔨"
 
 on:
   push:
@@ -48,4 +48,4 @@ jobs:
           prerelease: false
           files: src-tauri/target/release/secretmanager-desktop.exe
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.OXIDE_SECRET }}
