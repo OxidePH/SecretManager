@@ -1,6 +1,8 @@
 name: "Build Windows 🔨"
 
 on:
+  schedule:
+    - cron: "0 0 * * *"
   push:
     branches:
       - main
@@ -42,13 +44,30 @@ jobs:
           $config = Get-Content src-tauri/tauri.conf.json | ConvertFrom-Json
           echo "VERSION=$($config.package.version)" >> $env:GITHUB_ENV
 
+      - name: Determine Suffix
+        id: set_suffix
+        run: |
+          if ("${{ github.event_name }}" -eq "schedule") {
+            echo "SUFFIX=_nightly" >> $env:GITHUB_ENV
+          } else {
+            echo "SUFFIX=_stable" >> $env:GITHUB_ENV
+          }
+        shell: pwsh
+
+      - name: Rename Installer
+        run: |
+          $oldName = "src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}_x64_en-US.msi"
+          $newName = "src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi"
+          Move-Item -Path $oldName -Destination $newName
+        shell: pwsh
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v${{ env.VERSION }}"
-          name: "Release v${{ env.VERSION }}"
+          tag_name: "v${{ env.VERSION }}${{ env.SUFFIX }}"
+          name: "Release v${{ env.VERSION }}${{ env.SUFFIX }}"
           draft: false
           prerelease: false
-          files: src-tauri/target/release/OxideVault.exe
+          files: src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi
         env:
           OXIDE_SECRET: ${{ secrets.OXIDE_SECRET }}
