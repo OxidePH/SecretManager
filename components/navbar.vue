@@ -2,7 +2,7 @@
 	<UContainer>
 		<div class="fixed bottom-0 left-0 w-full shadow-lg rounded-t-2xl">
 			<div class="w-full max-w-md mx-auto">
-				<div class="bg-standard px-7 shadow-lg rounded-t-2xl">
+				<div class="bg-primary px-7 shadow-lg rounded-t-2xl">
 					<div class="flex">
 						<div class="flex-1 group">
 							<NuxtLink href="/serve" :class="{ 'text-green-500': route.path === '/serve' }"
@@ -72,9 +72,5 @@ const route = useRoute();
 
 body {
 	font-family: "Poppins", sans-serif;
-}
-
-.bg-standard {
-	background-color: #111827;
 }
 </style>

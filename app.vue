@@ -47,4 +47,8 @@ body {
 html::-webkit-scrollbar {
 	display: none;
 }
+
+.bg-primary {
+	background-color: #111827;
+}
 </style>
