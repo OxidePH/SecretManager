@@ -14,10 +14,11 @@
 				<template #header>
 					<div class="flex items-center space-x-2">
 						<div class="flex flex-col">
-							<h3 class="text-lg font-semibold leading-tight">
+							<h3 class="text-lg font-semibold leading-tight"
+								:class="{ 'text-red-500': file.integrity === 'corrupted' }">
 								{{ file.name }}
 							</h3>
-							<small class="text-gray-500 truncate w-16 block">
+							<small class="text-gray-500 truncate w-32 block">
 								{{ file.sha256 }}
 							</small>
 						</div>
@@ -41,14 +42,13 @@
 definePageMeta({
 	middleware: "setup-middleware",
 });
-import { getSHA256Hash as sha256 } from "boring-webcrypto-sha256";
-import { appDataDir } from "@tauri-apps/api/path";
-import { readDir } from "@tauri-apps/api/fs";
+import { useWorkspace } from "@/composables/useWorkspace";
 
-const vaultFiles = ref<{ name: string; size: number; created: string }[]>([]);
+const vaultFiles = ref<any>([]);
 const router = useRouter()
 const toast = useToast()
 const commandPaletteRef = ref()
+const { getAllVaults } = useWorkspace()
 
 const handleClick = (file: { name: string }) => {
 	alert(`Clicked on: ${file.name}`);
@@ -56,23 +56,7 @@ const handleClick = (file: { name: string }) => {
 
 onMounted(async () => {
 	try {
-		const dirPath = await appDataDir();
-		const files = await readDir(dirPath);
-
-		const holdFiles = await Promise.all(
-			files
-				.filter(file => file.name?.endsWith('.hold'))
-				.map(async file => {
-					if (!file.name) return null;
-					const filePath = `${dirPath}/${file.name}`;
-					return {
-						name: file.name.replace('.hold', ''),
-						sha256: await sha256(file.name),
-					};
-				})
-		);
-
-		vaultFiles.value = holdFiles.filter(file => file !== null) as any;
+		vaultFiles.value = await getAllVaults();
 	} catch (error) {
 		console.error("Error reading vault files:", error);
 	}

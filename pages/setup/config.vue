@@ -4,10 +4,6 @@
             Oxide Secret Manager Setup
         </template>
 
-        <UFormGroup label="Vault Name" class="mb-2" :error="vaultError">
-            <UInput placeholder="OxideVault" icon="i-heroicons-pencil" v-model="vault" />
-        </UFormGroup>
-
         <UFormGroup label="Secret Key" class="mb-2" :error="secretKeyError">
             <UInput icon="i-heroicons-key" v-model="secretKey" />
         </UFormGroup>
@@ -29,23 +25,14 @@
 
 <script lang="ts" setup>
 definePageMeta({
-    layout: "setup",
+    layout: "setup"
 });
-import { getName, getVersion } from '@tauri-apps/api/app';
-import { v4 as uuidv4 } from 'uuid';
-import sign from 'jwt-encode';
-import { Stronghold, Client } from "tauri-plugin-stronghold-api";
-import { appDataDir } from "@tauri-apps/api/path";
-import { exists } from "@tauri-apps/api/fs";
+import { useKey } from '@/composables/useKey';
+import { useRouter } from 'vue-router';
 
 const toast = useToast();
 const router = useRouter();
-
-const vault = ref('OxideVault');
-const secretKey = ref('');
-const dataKey = ref('');
-
-const vaultError = ref('');
+const { secretKey, dataKey, generateDataKey, saveDataKey, checkDataKeyExists } = useKey();
 const secretKeyError = ref('');
 
 const button = ref({
@@ -56,56 +43,23 @@ const button = ref({
 });
 
 onMounted(async () => {
-    await generateDataKey(secretKey.value);
-    await validateVaultName(vault.value);
-});
+    const keyExists = await checkDataKeyExists();
+    console.log(keyExists)
+    if (keyExists) {
+        return navigateTo("/setup/new-vault");
+    }
 
-watch(vault, async (newVal) => {
-    validateVaultName(newVal);
+    await generateDataKey(secretKey.value);
+    await saveDataKey();
 });
 
 watch(secretKey, async (newVal) => {
     await generateDataKey(newVal);
 });
 
-const validateVaultName = async (name: string) => {
-    if (!name) {
-        vaultError.value = 'Vault name is required.';
-        return;
-    }
-
-    const vaultPath = `${await appDataDir()}/${name}.hold`;
-    const vaultExists = await exists(vaultPath);
-
-    if (vaultExists) {
-        vaultError.value = 'A vault with this name already exists.';
-    } else {
-        vaultError.value = '';
-    }
-}
-
-const generateDataKey = async (secretKey: string) => {
-    const data = {
-        platform: await getName(),
-        version: await getVersion(),
-        key: uuidv4(),
-        generatedAt: new Date().toISOString()
-    };
-    dataKey.value = sign(data, secretKey);
-};
-
 const handleSubmit = async () => {
-    vaultError.value = !vault.value ? 'Vault name is required.' : '';
-    secretKeyError.value = !secretKey.value ? 'Secret key is required.' : '';
-
-    if (!vault.value || !secretKey.value || vaultError.value) {
-        toast.add({
-            id: 'setup_error',
-            title: 'Setup Failed',
-            description: 'Please fill in all required fields.',
-            icon: 'i-heroicons-exclamation-circle',
-            timeout: 5000,
-        });
+    if (!secretKey.value) {
+        secretKeyError.value = 'Secret key is required.';
         return;
     }
 
@@ -113,46 +67,23 @@ const handleSubmit = async () => {
     button.value.label = 'Setting up...';
 
     try {
-        const vaultPath = `${await appDataDir()}/${vault.value}.hold`;
-        console.log(`Vault path: ${vaultPath}`);
-        const stronghold = await Stronghold.load(vaultPath, secretKey.value);
-
-        let client: Client;
-        try {
-            client = await stronghold.loadClient(vault.value);
-        } catch {
-            client = await stronghold.createClient(vault.value);
-        }
-
-        const store = client.getStore();
-        const jsonString = JSON.stringify({
-            name: vault.value,
-            timestamp: new Date().toISOString()
-        });
-        const encodedData = new TextEncoder().encode(jsonString);
-        await store.insert("vault_metadata", Array.from(encodedData));
-        await stronghold.save();
-
+        await saveDataKey();
         toast.add({
-            id: 'setup_completed',
             title: 'Setup Completed',
-            description: `Your Oxide Secret Manager vault "${vault.value}" is now ready.`,
+            description: 'Your data key is stored.',
             icon: 'i-heroicons-key',
             timeout: 5000,
         });
-
-        button.value.loading = false;
-        button.value.label = 'Setup Complete';
-        router.push('/');
+        router.push('/setup/new-vault');
     } catch (error) {
         console.error('Error creating vault:', error);
         toast.add({
-            id: 'setup_error',
             title: 'Setup Failed',
             description: 'Could not create the vault. Check permissions.',
             icon: 'i-heroicons-exclamation-circle',
             timeout: 5000,
         });
+    } finally {
         button.value.loading = false;
         button.value.label = 'Complete Setup';
     }

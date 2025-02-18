@@ -89,7 +89,7 @@ const clearWorkspaces = async () => {
 			icon: 'i-heroicons-exclamation-circle',
 			timeout: 5000,
 		});
-		router.push("/setup/welcome");
+		router.push("/setup/new-vault");
 	} catch (error) {
 		console.error("Failed to clear workspaces:", error);
 	}

@@ -13,7 +13,7 @@ definePageMeta({
 });
 
 import { ref, onMounted } from 'vue';
-import { useWorkspace } from '~/composables/useFileManagement';
+import { useWorkspace } from '~/composables/useWorkspace';
 
 const { isVaultExists, getAllVaults } = useWorkspace();
 const vaultExists = ref<boolean | null>(null);
