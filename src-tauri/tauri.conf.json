@@ -33,7 +33,9 @@
 			},
 			"fs": {
 				"all": true,
-				"scope": ["**"]
+				"scope": [
+					"**"
+				]
 			},
 			"path": {
 				"all": true
@@ -90,6 +92,7 @@
 				"width": 412,
 				"decorations": false,
 				"transparent": true,
+				"center": true,
 				"title": "Oxide Secrets Manager"
 			}
 		],

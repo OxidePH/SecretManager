@@ -22,10 +22,8 @@ definePageMeta({
     layout: "setup",
     middleware: "setup-middleware",
 });
-import { getName, getVersion } from '@tauri-apps/api/app';
-import { v4 as uuidv4 } from 'uuid';
-import sign from 'jwt-encode';
 import { Stronghold, Client } from "tauri-plugin-stronghold-api";
+import { getVersion } from '@tauri-apps/api/app';
 import { appDataDir } from "@tauri-apps/api/path";
 import { exists } from "@tauri-apps/api/fs";
 import { useKeyStore } from '@/stores/key';
@@ -107,12 +105,21 @@ const handleSubmit = async () => {
         }
 
         const store = client.getStore();
-        const jsonString = JSON.stringify({
+        const metaData = JSON.stringify({
             name: vault.value,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            version: await getVersion(),
+            description: '',
         });
-        const encodedData = new TextEncoder().encode(jsonString);
-        await store.insert("vault_metadata", Array.from(encodedData));
+        const encodedMetadata = new TextEncoder().encode(metaData);
+        const protectedData = JSON.stringify([{
+            entity: "Sample",
+            value: "Value for Sample",
+            createdAt: new Date().toISOString(),
+        }]);
+        const encodedprotectedData = new TextEncoder().encode(protectedData);
+        await store.insert("metadata", Array.from(encodedMetadata));
+        await store.insert("data", Array.from(encodedprotectedData));
         await stronghold.save();
 
         toast.add({

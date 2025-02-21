@@ -6,6 +6,7 @@ import { getSHA256Hash as sha256 } from "boring-webcrypto-sha256";
 
 export function useWorkspace() {
 	const keyStore = useKeyStore();
+	const toast = useToast();
 
 	const isVaultExists = async () => {
 		const appDir = await appDataDir();
@@ -27,38 +28,85 @@ export function useWorkspace() {
 						file: file.name,
 						integrity: result.integrity,
 						sha256: await sha256((file.name || '').replace('.hold', '')),
-						createdAt: result.createdAt
+						createdAt: result.createdAt,
+						version: result.version,
+						description: result.description,
+						data: result.data
 					};
 				})
 		);
 		return vaults;
 	};
 
-	async function getVaultMetadata(client: Client) {
+	async function getVaultData(client: Client, target: string) {
 		const store = client.getStore();
-		const data = await store.get('vault_metadata');
-		const metadata = new TextDecoder().decode(new Uint8Array(data));
-		return JSON.parse(metadata);
+		const data = await store.get(target);
+		const decodedData = new TextDecoder().decode(new Uint8Array(data));
+		return JSON.parse(decodedData);
 	}
 
-	const checkVaultIntegrity = async (filePath: string): Promise<{ integrity: 'valid' | 'corrupted', name: string, createdAt: string | null }> => {
+	async function saveVaultData(vault: string, target: string, newData: any) {
+		try {
+			const appDir = await appDataDir();
+			const filePath = `${appDir}/${vault}.hold`;
+
+			const stronghold = await Stronghold.load(filePath, keyStore.dataKey);
+			const clientName = filePath.split('/').pop()?.replace('.hold', '') || 'Unknown';
+			const client = await stronghold.loadClient(clientName);
+
+			const store = client.getStore();
+			const encodedData = new TextEncoder().encode(JSON.stringify(newData));
+
+			await store.insert(target, Array.from(encodedData));
+			await stronghold.save();
+
+			toast.add({
+				id: 'vault_save_data_success',
+				title: 'Vault Updated Successfully',
+				description: `Data for "${target}" has been saved successfully.`,
+				icon: 'i-heroicons-check-circle',
+				timeout: 5000,
+			});
+		} catch (error) {
+			console.error('Error saving vault data:', error);
+			toast.add({
+				id: 'vault_save_data_error',
+				title: 'Vault Update Failed',
+				description: `An error occurred while saving data for "${target}". Please try again.`,
+				icon: 'i-heroicons-x-circle',
+				timeout: 5000,
+			});
+		}
+	}
+
+	const checkVaultIntegrity = async (filePath: string): Promise<{
+		integrity: 'valid' | 'corrupted', name: string, createdAt: string | null, version: string | null, description: string | null, data: [{ entity: string, value: string, createdAt: string | null }] | null
+	}> => {
 		try {
 			const stronghold = await Stronghold.load(filePath, keyStore.dataKey);
 			const client = await stronghold.loadClient(filePath.split('/').pop()?.replace('.hold', '') || 'Unknown');
-			const meta = await getVaultMetadata(client);
-			console.log(meta)
+			const metadata = await getVaultData(client, 'metadata');
+			const data = await getVaultData(client, 'data');
+			console.log(metadata)
+			console.log(data)
 
 			return {
 				integrity: 'valid',
-				name: meta.name,
-				createdAt: meta.createdAt
+				name: metadata.name,
+				createdAt: metadata.createdAt,
+				version: metadata.version,
+				description: metadata.descrption,
+				data: data
 			};
 		} catch (error) {
 			console.error(`Error opening vault at ${filePath}:`, error);
 			return {
 				integrity: 'corrupted',
 				name: 'VAULT_CORRUPTED_ERROR',
-				createdAt: null
+				createdAt: null,
+				version: null,
+				description: null,
+				data: null
 			};
 		}
 	};
@@ -66,5 +114,6 @@ export function useWorkspace() {
 	return {
 		isVaultExists,
 		getAllVaults,
+		saveVaultData
 	};
 }
