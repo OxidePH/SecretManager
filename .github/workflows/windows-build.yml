@@ -56,8 +56,8 @@ jobs:
 
       - name: Rename Installer
         run: |
-          $oldName = "src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}_x64_en-US.msi"
-          $newName = "src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi"
+          $oldName = "src-tauri/target/release/bundle/msi/LegionJS_${{ env.VERSION }}_x64_en-US.msi"
+          $newName = "src-tauri/target/release/bundle/msi/LegionJS_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi"
           Move-Item -Path $oldName -Destination $newName
         shell: pwsh
 
@@ -68,6 +68,6 @@ jobs:
           name: "Release v${{ env.VERSION }}${{ env.SUFFIX }}"
           draft: false
           prerelease: false
-          files: src-tauri/target/release/bundle/msi/OxideVault_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi
+          files: src-tauri/target/release/bundle/msi/LegionJS_${{ env.VERSION }}${{ env.SUFFIX }}_x64_en-US.msi
         env:
           OXIDE_SECRET: ${{ secrets.OXIDE_SECRET }}

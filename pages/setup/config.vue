@@ -1,7 +1,7 @@
 <template>
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800 w-full' }">
         <template #header>
-            Oxide Secret Manager Setup
+            LegionJS Setup
         </template>
 
         <UFormGroup label="Secret Key" class="mb-2" :error="secretKeyError">

@@ -3,7 +3,7 @@
 		<div class="mb-6">
 			<img src="/assets/image/logo.png" alt="Logo" class="mx-auto" />
 			<p id="helper-text-explanation" class="mt-2 text-center text-md text-gray-500 dark:text-gray-400">
-				Oxide Secret Manager
+				LegionJS
 			</p>
 		</div>
 		<form class="max-w-sm mx-auto">

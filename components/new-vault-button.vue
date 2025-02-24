@@ -129,7 +129,7 @@ const handleSubmit = async () => {
             toast.add({
                 id: 'setup_completed',
                 title: 'Setup Completed',
-                description: `Your Oxide Secret Manager vault "${vault.value}" is now ready.`,
+                description: `Your LegionJS vault "${vault.value}" is now ready.`,
                 icon: 'i-heroicons-key',
                 timeout: 5000,
             });

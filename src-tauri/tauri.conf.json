@@ -8,7 +8,7 @@
 		"withGlobalTauri": true
 	},
 	"package": {
-		"productName": "OxideVault",
+		"productName": "LegionJS",
 		"version": "1.0.0"
 	},
 	"plugins": {
@@ -26,7 +26,17 @@
 				"create": true
 			},
 			"shell": {
-				"all": true
+				"all": true,
+				"execute": true,
+				"sidecar": true,
+				"open": true,
+				"scope": [
+					{
+						"name": "npm",
+						"cmd": "npm",
+						"args": true
+					}
+				]
 			},
 			"dialog": {
 				"all": true
@@ -93,7 +103,7 @@
 				"decorations": false,
 				"transparent": true,
 				"center": true,
-				"title": "Oxide Secrets Manager"
+				"title": "LegionJS"
 			}
 		],
 		"systemTray": {

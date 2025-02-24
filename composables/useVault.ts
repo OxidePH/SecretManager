@@ -4,7 +4,7 @@ import { Stronghold, Client } from 'tauri-plugin-stronghold-api';
 import { useKeyStore } from '@/stores/key';
 import { getSHA256Hash as sha256 } from "boring-webcrypto-sha256";
 
-export function useWorkspace() {
+export function useVault() {
 	const keyStore = useKeyStore();
 	const toast = useToast();
 

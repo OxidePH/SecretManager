@@ -1,7 +1,7 @@
 <template>
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800 w-full' }">
         <template #header>
-            Welcome to Oxide Secret Manager 🥷
+            Welcome to LegionJS 🥷
         </template>
 
         <UTextarea color="gray" variant="outline" v-model="condition" :rows="20" disabled />

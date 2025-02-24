@@ -5,11 +5,11 @@
 				<div class="bg-primary px-7 shadow-lg rounded-t-2xl">
 					<div class="flex">
 						<div class="flex-1 group">
-							<NuxtLink href="/serve" :class="{ 'text-green-500': route.path === '/serve' }"
+							<NuxtLink href="/projects" :class="{ 'text-green-500': route.path === '/projects' }"
 								class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-green-500">
 								<span class="block px-1 pt-1 pb-1">
 									<i class="far fa-server text-2xl pt-1 mb-1 block"></i>
-									<span class="block text-xs pb-2">Serve</span>
+									<span class="block text-xs pb-2">Projects</span>
 									<span class="block w-5 mx-auto h-1 group-hover:bg-green-500 rounded-full"></span>
 								</span>
 							</NuxtLink>

@@ -23,16 +23,16 @@
 				</svg>
 			</div>
 		</div>
-		<div class="app-name">Oxide Secret Manager</div>
+		<div class="app-name">LegionJS</div>
 
 		<UModal v-model="isOnExit" :ui="{ container: 'flex items-center justify-center min-h-screen' }">
 			<UCard :ui="{
 				ring: '',
 				divide: 'divide-y divide-gray-100 dark:divide-gray-800',
 			}" class="w-full max-w-md">
-				<template #header> Close Oxide Secret Manager? </template>
+				<template #header> Close LegionJS? </template>
 
-				<p> Are you sure you want to close Oxide Secret Manager? </p>
+				<p> Are you sure you want to close LegionJS? </p>
 
 				<template #footer>
 					<div class="flex justify-end space-x-2">

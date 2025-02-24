@@ -47,10 +47,10 @@ definePageMeta({
 });
 import SelectVault from "~/components/select-vault-button.vue";
 import newVaultButton from "~/components/new-vault-button.vue";
-import { useWorkspace } from "@/composables/useWorkspace";
+import { useVault } from "~/composables/useVault"
 
 const vaultFiles = ref<any>([]);
-const { getAllVaults } = useWorkspace();
+const { getAllVaults } = useVault();
 
 const refreshVaults = async () => {
 	try {

@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { useWorkspace } from '~/composables/useWorkspace';
+import { useVault } from '~/composables/useVault'
 
 const emit = defineEmits(["vaultUpdated"]);
 const props = defineProps<{
@@ -113,7 +113,7 @@ const props = defineProps<{
 }>();
 
 
-const { saveVaultData } = useWorkspace();
+const { saveVaultData } = useVault();
 const isOpen = ref(false)
 const activeTab = ref(0);
 const vaultData = ref(props.vault.data)

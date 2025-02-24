@@ -13,9 +13,9 @@ definePageMeta({
 });
 
 import { ref, onMounted } from 'vue';
-import { useWorkspace } from '~/composables/useWorkspace';
+import { useVault } from '~/composables/useVault'
 
-const { isVaultExists, getAllVaults } = useWorkspace();
+const { isVaultExists, getAllVaults } = useVault();
 const vaultExists = ref<boolean | null>(null);
 const vaultList = ref<any>([]);
 

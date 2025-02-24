@@ -1,7 +1,7 @@
 <template>
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800 w-full' }">
         <template #header>
-            Oxide Secret Manager Setup
+            LegionJS Setup
         </template>
 
         <UFormGroup label="Vault Name" class="mb-2" :error="vaultError">
@@ -28,12 +28,12 @@ import { appDataDir } from "@tauri-apps/api/path";
 import { exists } from "@tauri-apps/api/fs";
 import { useKeyStore } from '@/stores/key';
 import { useRouter } from 'vue-router';
-import { useWorkspace } from '@/composables/useWorkspace';
+import { useVault } from '~/composables/useVault'
 
 const toast = useToast();
 const router = useRouter();
 const keyStore = useKeyStore();
-const { isVaultExists } = useWorkspace()
+const { isVaultExists } = useVault()
 
 const vault = ref('OxideVault');
 const vaultError = ref('');
@@ -125,7 +125,7 @@ const handleSubmit = async () => {
         toast.add({
             id: 'setup_completed',
             title: 'Setup Completed',
-            description: `Your Oxide Secret Manager vault "${vault.value}" is now ready.`,
+            description: `Your LegionJS vault "${vault.value}" is now ready.`,
             icon: 'i-heroicons-key',
             timeout: 5000,
         });
